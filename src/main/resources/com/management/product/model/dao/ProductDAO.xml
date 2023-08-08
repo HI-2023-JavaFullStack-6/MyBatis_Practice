@@ -5,7 +5,7 @@
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
 <mapper namespace="">
-    <resultMap id="productResultMap" type="com.ohgiraffers.common.ProductDTO">
+    <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
         <id property="" column=""/>
         <result property="" column=""/>
     </resultMap>
