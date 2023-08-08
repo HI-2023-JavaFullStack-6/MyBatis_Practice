@@ -11,6 +11,8 @@ public class ProductController {
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
 
+
+
     public void selectAllProductList() {
 
         // 2. 전체 제품 목록을 조회하는 메소드

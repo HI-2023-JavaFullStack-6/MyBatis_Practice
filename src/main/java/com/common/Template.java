@@ -1,5 +1,13 @@
 package com.common;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Template {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -8,10 +16,10 @@ public class Template {
             String resource = "config/mybatis-config.xml";
             try {
                 InputStream inputStream = Resources.getResourceAsStream(resource);
-                SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+                sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } return SqlSessionFactory.openSession(false);
+        } return sqlSessionFactory.openSession(false);
     }
 }
