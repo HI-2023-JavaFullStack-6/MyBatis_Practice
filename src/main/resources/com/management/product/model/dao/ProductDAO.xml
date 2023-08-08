@@ -4,7 +4,7 @@
 <!-- * 주석을 지우고 각각 알맞은 태그를 활용하여 내용을 작성하세요. -->
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
-<mapper namespace="">
+<mapper namespace="p">
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
 

@@ -2,7 +2,10 @@ package com.management.product.controller;
 
 import com.common.SearchCondition;
 import com.management.product.model.dto.ProductDTO;
+import com.management.product.model.service.ProductService;
+import com.management.product.view.ProductPrint;
 
+import java.util.List;
 import java.util.Map;
 
 public class ProductController {
@@ -10,6 +13,13 @@ public class ProductController {
     // * 주석을 지우고 Controller 역할에 해당하는 내용을 작성하세요.
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
+    private  final ProductService productService;
+    private final ProductPrint productPrint;
+
+    public ProductController() {
+        productService = new ProductService();
+        productPrint = new ProductPrint();
+    }
 
     public void selectAllProductList() {
 
@@ -17,6 +27,12 @@ public class ProductController {
         //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 전체 제품 목록을 조회하세요.
         //    (조건 2) 제품 목록이 비어있지 않은 경우, Print 객체를 통해 제품 목록을 출력하세요.
         //    (조건 3) 제품 목록이 없는 경우, Print 객체를 통해 조회 결과가 없다는 오류 메세지를 출력하세요.
+        List<ProductDTO> productlist = ProductService.selectAllProductList();
+        if(productlist != null){
+            productPrint.printAllProductList(productlist);
+        }else {
+            productPrint.printErrorMessage("productlist");
+        }
 
     }
 
