@@ -5,6 +5,16 @@
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
 <mapper namespace="">
+    <resultMap id="productResultMap" type="com.ohgiraffers.common.ProductDTO">
+        <id property="" column=""/>
+        <result property="" column=""/>
+    </resultMap>
+    <select id="selectAllProductList"></select>
+    <select id="selectProductByCondition"></select>
+    <insert id="insertProduct"></insert>
+    <update id="updateProduct"></update>
+    <delete id="deleteProduct"></delete>
+</mapper>
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
 
@@ -27,5 +37,3 @@
 
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->
-
-</mapper>
