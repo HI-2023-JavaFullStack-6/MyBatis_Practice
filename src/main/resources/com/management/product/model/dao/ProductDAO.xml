@@ -4,13 +4,14 @@
 <!-- * 주석을 지우고 각각 알맞은 태그를 활용하여 내용을 작성하세요. -->
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
-<mapper namespace="">
+<mapper namespace="com.management.product.model.dao.ProductDAO">
+    <resultMap id="" type="com.management.product.model.dto.ProductDTO"
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
 
     <!-- 3. 전체 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectAllProductList -->
-
+<select id="selectAllProductList" resultMap=""></select>
     <!-- 4. 조건에 따른 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectProductByCondition
             (참고 1) 제품명 조회인 경우, 검색어를 '포함'한 모든 제품을 조회합니다.
@@ -18,7 +19,7 @@
             (참고 2) 판매점 유형별 조회의 경우,
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
-
+<select id="selectProductByCondition" resultMap=""></select>
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
 

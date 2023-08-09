@@ -32,11 +32,10 @@ public class ProductPrint {
 
     }
 
-    public void printErrorMessage(String errorCode) {
-
+    public void printErrorMessage(String selectList) {
+        System.out.println("제품 목록 조회에 실패했습니다!");
         // 4. 에러메시지를 출력하는 메소드
         //    (조건) 에러코드를 전달받아 에러를 알리는 메시지를 출력하세요.
-
     }
 
 }

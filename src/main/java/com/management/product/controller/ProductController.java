@@ -2,17 +2,33 @@ package com.management.product.controller;
 
 import com.common.SearchCondition;
 import com.management.product.model.dto.ProductDTO;
+import com.management.product.model.service.ProductService;
+import com.management.product.view.ProductPrint;
+import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
 import java.util.Map;
 
 public class ProductController {
+    private final ProductService productService;
+    private final ProductPrint productPrint;
 
+    public ProductController(){
+        productService = new ProductService();
+        productPrint = new ProductPrint();
+    }
     // * 주석을 지우고 Controller 역할에 해당하는 내용을 작성하세요.
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
 
     public void selectAllProductList() {
+        List<ProductDTO> allProductList = productService.selectAllProductList();
 
+        if(allProductList != null){
+            productPrint.printAllProductList(allProductList);
+        } else {
+            productPrint.printErrorMessage("selectList");
+        }
         // 2. 전체 제품 목록을 조회하는 메소드
         //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 전체 제품 목록을 조회하세요.
         //    (조건 2) 제품 목록이 비어있지 않은 경우, Print 객체를 통해 제품 목록을 출력하세요.
@@ -21,7 +37,13 @@ public class ProductController {
     }
 
     public void selectProductByCondition(SearchCondition searchCondition) {
+        List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
 
+        if(productList != null){
+
+        } else {
+            productPrint.printErrorMessage("selectList");
+        }
         // 3. 조건에 따른 제품 목록을 조회하는 메소드
         //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 조건에 따른 제품 목록을 조회하세요.
         //    (조건 2) 제품 목록이 비어있지 않은 경우, SearchCondition과 List<ProductDTO> 객체를 반환하여
