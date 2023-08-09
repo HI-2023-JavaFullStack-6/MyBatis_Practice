@@ -20,12 +20,13 @@ public class CategoryController {
         categoryPrint = new CategoryPrint();
     }
     public void selectCategoryList(Map<String, String> parameter) {
-        List<CategoryDTO> categoryList = categoryService.selectCategoryList();
+        /*List<CategoryDTO> categoryList = categoryService.selectCategoryList(parameter);
+        sqlSession.getMapper(CategoryDAO.class);
         if(categoryList != null) {
             categoryPrint.printTeamList(categoryList);
         } else {
             categoryPrint.printErrorMessage("selectCategoryList");
-        }
+        }*/
     }
 
     public void registNewCategory(CategoryDTO category) {
