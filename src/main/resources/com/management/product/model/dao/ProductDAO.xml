@@ -45,31 +45,33 @@
             WHERE PRODUCT_NAME LIKE CONCAT('%', #{ value },'%')
         </if>
 
-        <if test="condition == 'productionStatus' and 'productionStatus' == 'R'">
+        <if test="condition == '백화점'">
             WHERE DISCOUNT_RATE = 0
         </if>
-        <if test="condition == 'productionStatus' and 'productionStatus' == 'Y'">
+        <if test="condition == '아울렛'">
             WHERE DISCOUNT_RATE >= 1
+        </if>
+        <if test="condition == 'releaseData'">
+            WHERE(RELEASE_DATE gt LAST_DAY(NOW() - interval 1 month) AND RELEASE_DATE lte LAST_DAY(NOW()))
         </if>
         FROM PRODUCT_INFO
     </select>
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
     <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        INSERT INTO PRODUCT_INFO VALUES(
-                                           PRODUCT_NAME, CATEGORY_CODE, ORIGIN_COST, RELEASE_DATE,
-                                           STOCK_QUANTITY, DISCOUNT_RATE
-                                       )
+        INSERT INTO PRODUCT_INFO ( PRODUCT_NAME, CATEGORY_CODE, ORIGIN_COST, RELEASE_DATE,
+                                   STOCK_QUANTITY, DISCOUNT_RATE )
+                    VALUES (#{productName}, #{categoryCode}, #{originCost}, #{releaseDate}, #{stockQuantity}, #{discountRate})
     </insert>
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        UPDATE SET PRODUCT_NAME WHERE PRODUCT_CODE = #{ value }
+        UPDATE PRODUCT_INFO SET PRODUCT_NAME WHERE PRODUCT_CODE = #{productCode}
     </update>
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->
-    <delete id="deleteProduct" parameterType="_int">
-        DELETE FROM PRODUCT_INFO WHERE PRODUCT_CODE = #{ value }
+    <delete id="deleteProduct" parameterType="string">
+        DELETE FROM PRODUCT_INFO WHERE PRODUCT_CODE = #{productCode}
     </delete>
 </mapper>

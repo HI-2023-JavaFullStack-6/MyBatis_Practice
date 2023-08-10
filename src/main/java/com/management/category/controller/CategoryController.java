@@ -1,5 +1,6 @@
 package com.management.category.controller;
 
+import com.management.category.model.dao.CategoryDAO;
 import com.management.category.model.dto.CategoryDTO;
 import com.management.category.model.service.CategoryService;
 import com.management.category.view.CategoryPrint;
@@ -21,7 +22,7 @@ public class CategoryController {
     }
     public void selectCategoryList(Map<String, String> parameter) {
         /*List<CategoryDTO> categoryList = categoryService.selectCategoryList(parameter);
-        sqlSession.getMapper(CategoryDAO.class);
+
         if(categoryList != null) {
             categoryPrint.printTeamList(categoryList);
         } else {
