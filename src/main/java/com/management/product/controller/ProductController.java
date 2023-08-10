@@ -30,11 +30,6 @@ public class ProductController {
             productPrint.printErrorMessage("selectList");
         }
 
-        // 2. 전체 제품 목록을 조회하는 메소드
-        //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 전체 제품 목록을 조회하세요.
-        //    (조건 2) 제품 목록이 비어있지 않은 경우, Print 객체를 통해 제품 목록을 출력하세요.
-        //    (조건 3) 제품 목록이 없는 경우, Print 객체를 통해 조회 결과가 없다는 오류 메세지를 출력하세요.
-
     }
 
     public void selectProductByCondition(SearchCondition searchCondition) {
