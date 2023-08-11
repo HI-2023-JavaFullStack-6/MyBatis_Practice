@@ -7,7 +7,7 @@ public class CategoryDTO implements Serializable {
     private String categoryName;
 
     public CategoryDTO() {
-        super();
+
     }
 
     public CategoryDTO(String categoryCode, String categoryName) {

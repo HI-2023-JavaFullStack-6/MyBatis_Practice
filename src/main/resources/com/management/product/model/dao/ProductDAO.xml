@@ -64,7 +64,7 @@
     </insert>
 
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        UPDATE PRODUCT_INFO SET PRODUCT_CODE = #{productCode}
+        UPDATE PRODUCT_INFO SET /*PRODUCT_CODE = #{productCode}*/
                                 PRODUCT_NAME = #{productName},
                                 CATEGORY_CODE = #{categoryCode},
                                 ORIGIN_COST = #{originCost},

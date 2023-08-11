@@ -4,6 +4,7 @@ import com.management.category.model.dto.CategoryDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryDAO {
 
@@ -21,6 +22,6 @@ public interface CategoryDAO {
     int updateCategory(CategoryDTO category);
 
     @DeleteProvider(type=CategoryDAOProvider.class, method="deleteCategory")
-    int deleteCategory(@Param("categoryCode") int categoryCode);
+    int deleteCategory(Map<String, String> parameter);
 
 }

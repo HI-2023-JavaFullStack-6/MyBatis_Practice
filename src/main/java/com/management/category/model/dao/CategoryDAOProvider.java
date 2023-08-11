@@ -22,24 +22,26 @@ public class CategoryDAOProvider {
     public String insertCategory(CategoryDTO category) {
         SQL sql = new SQL();
         sql.INSERT_INTO("PRODUCT_CATEGORY")
-                .VALUES("CATEGORY_NAME", "#{ categoryName }");
+                .VALUES("CATEGORY_NAME", "#{categoryName}");
         return sql.toString();
 
     }
 
     public String updateCategory(CategoryDTO category) {
-        SQL sql = new SQL();
-        sql.UPDATE("PRODUCT_CATEGORY")
-                .SET("CATEGORY_NAME = #{ categoryName }")
-                .WHERE("CATEGORY_CODE = #{ categoryCode }");
-        return sql.toString();
+        return new SQL()
+                .UPDATE("PRODUCT_CATEGORY")
+                .SET("CATEGORY_NAME = #{categoryName}")
+                .WHERE("CATEGORY_CODE = #{categoryCode}")
+                .toString();
     }
 
     public String deleteCategory(Map<String, String> parameter) {
 
         return new SQL()
                 .DELETE_FROM("PRODUCT_CATEGORY")
-                .WHERE("CATEGORY_CODE = #{ categoryCode }").toString();
+                .WHERE("CATEGORY_CODE = #{categoryCode}")
+                .toString();
+
 
     }
 }

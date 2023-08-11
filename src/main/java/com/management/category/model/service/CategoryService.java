@@ -76,7 +76,7 @@ public class CategoryService {
         SqlSession sqlSession = getSqlSession();
 
         categoryDAO = sqlSession.getMapper(CategoryDAO.class);
-        int result = categoryDAO.deleteCategory(parameter.size());
+        int result = categoryDAO.deleteCategory(parameter);
 
         if(result > 0) {
             sqlSession.commit();
