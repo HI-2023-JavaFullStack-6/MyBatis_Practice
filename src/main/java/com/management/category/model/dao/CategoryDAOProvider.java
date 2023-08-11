@@ -12,11 +12,18 @@ public class CategoryDAOProvider {
     // * 주석을 지우고 Provider 활용하여 내용을 작성하세요.
 
     public String selectCategoryList(Map<String, String> parameter) {
-        return new SQL()
-                .SELECT("CATEGORY_CODE")
-                .SELECT("CATEGORY_NAME")
-                .FROM("PRODUCT_CATEGORY")
-                .toString();
+
+        SQL sql = new SQL();
+        sql.SELECT("A.CATEGORY_CODE")
+        .SELECT("A.CATEGORY_NAME")
+        .FROM("PRODUCT_CATEGORY A");
+
+        /*if (1 + 1 == 2) {
+            sql.JOIN("PRODUCT_INFO B on (A.CATEGORY_CODE = B.CATEGORY_CODE)")
+            .ORDER_BY("COUNT(B.CATEGORY_CODE)");
+        }*/
+
+    return sql.toString();
     }
 
     public String insertCategory(CategoryDTO category) {

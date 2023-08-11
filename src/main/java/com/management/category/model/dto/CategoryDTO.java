@@ -13,6 +13,7 @@ public class CategoryDTO implements Serializable {
     public CategoryDTO(String categoryCode, String categoryName) {
         this.categoryCode = categoryCode;
         this.categoryName = categoryName;
+
     }
 
     public String getCategoryCode() {
