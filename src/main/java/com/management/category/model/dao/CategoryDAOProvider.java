@@ -1,6 +1,7 @@
 package com.management.category.model.dao;
 
 import com.management.category.model.dto.CategoryDTO;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Map;
 
@@ -24,8 +25,10 @@ public class CategoryDAOProvider {
 
         // 2. Provider를 활용하여 제품분류를 등록하는 코드를 작성하세요.
         //    아래 작성된 return null은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return null;
 
+        return new SQL()
+                .INSERT_INTO("PRODUCT_CATEGORY")
+                .VALUES("CATEGORY_NAME","#{ categoryName }").toString();
     }
 
     public String updateCategory(CategoryDTO category) {

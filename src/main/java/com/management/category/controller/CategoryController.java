@@ -1,14 +1,21 @@
 package com.management.category.controller;
 
 import com.management.category.model.dto.CategoryDTO;
+import com.management.category.model.service.CategoryService;
+import com.management.category.view.CategoryPrint;
 
 import java.util.Map;
 
 public class CategoryController {
 
+
+
     // * 주석을 지우고 Controller 역할에 해당하는 내용을 작성하세요.
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
+
+    private CategoryPrint categoryPrint;
+    private CategoryService categoryService;
 
     public void selectCategoryList(Map<String, String> parameter) {
 
@@ -25,6 +32,16 @@ public class CategoryController {
         //    (조건 1) Service 객체를 호출하여 등록을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) insert가 정상적으로 수행된 경우, Print 객체를 통해 등록 성공했다는 성공 메세지를 출력하세요.
         //    (조건 3) insert가 정상적으로 수행되지 않은 경우, Print 객체를 통해 등록 실패했다는 오류 메세지를 출력하세요.
+
+        String categoryList = category.getCategoryName();
+        CategoryDTO categoryName = new CategoryDTO();
+        categoryName.setCategoryName(categoryList);
+
+        if(categoryService.registNewCategory(categoryName)){
+            categoryPrint.printSuccessMessage("registNewCategory");
+        }else {
+            categoryPrint.printErrorMessage("registNewCategory");
+        }
 
     }
 

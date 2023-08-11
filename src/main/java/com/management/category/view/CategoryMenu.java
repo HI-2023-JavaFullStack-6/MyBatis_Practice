@@ -62,8 +62,9 @@ public class CategoryMenu {
         System.out.println("제품분류명을 입력해 주세요 : ");
         String categoryName = sc.nextLine();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
         // 주석을 지우고 받아온 정보를 categoryDTO 객체에 setting 하세요.
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setCategoryName(categoryName);
 
         return categoryDTO;
     }

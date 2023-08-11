@@ -2,7 +2,10 @@ package com.management.product.controller;
 
 import com.common.SearchCondition;
 import com.management.product.model.dto.ProductDTO;
+import com.management.product.model.service.ProductService;
+import com.management.product.view.ProductPrint;
 
+import java.util.List;
 import java.util.Map;
 
 public class ProductController {
@@ -11,12 +14,29 @@ public class ProductController {
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
 
+    private ProductService productService;
+    private ProductPrint productPrint;
+
+    public ProductController(){
+        productService = new ProductService();
+        productPrint = new ProductPrint();
+    }
+
+
     public void selectAllProductList() {
 
         // 2. 전체 제품 목록을 조회하는 메소드
         //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 전체 제품 목록을 조회하세요.
         //    (조건 2) 제품 목록이 비어있지 않은 경우, Print 객체를 통해 제품 목록을 출력하세요.
         //    (조건 3) 제품 목록이 없는 경우, Print 객체를 통해 조회 결과가 없다는 오류 메세지를 출력하세요.
+
+        List<ProductDTO> productList = productService.selectAllProductList();
+
+        if(productList != null){
+           productPrint.printAllProductList(productList);
+        }else{
+            productPrint.printErrorMessage("selectAllProductList");
+        }
 
     }
 
@@ -27,6 +47,15 @@ public class ProductController {
         //    (조건 2) 제품 목록이 비어있지 않은 경우, SearchCondition과 List<ProductDTO> 객체를 반환하여
         //    　　　　　Print 객체를 통해 조회 조건과 제품 목록을 출력하세요.
         //    (조건 3) 제품 목록이 없는 경우, Print 객체를 통해 조회 결과가 없다는 오류 메세지를 출력하세요.
+
+        List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
+
+
+        if(productList != null){
+            productPrint.printProductList(productList,searchCondition);
+        }else {
+            productPrint.printErrorMessage("selectProductByCondition");
+        }
 
     }
 
@@ -40,6 +69,30 @@ public class ProductController {
         //    (조건 3) insert가 정상적으로 수행된 경우, Print 객체를 통해 등록 성공했다는 성공 메세지를 출력하세요.
         //    (조건 4) insert가 정상적으로 수행되지 않은 경우, Print 객체를 통해 등록 실패했다는 오류 메세지를 출력하세요.
 
+        String name = product.getName();
+        String categoryCode = product.getCategoryCode();
+        String originCost = product.getOriginCost();
+        String releaseDate = product.getReleaseDate();
+        String stockQuantity = product.getStockQuantity();
+        String discountRate = product.getDiscountRate();
+        String productionStatus = "Y";
+        String salesQuantity = "0";
+
+        ProductDTO productList = new ProductDTO();
+        productList.setName(name);
+        productList.setCategoryCode(categoryCode);
+        productList.setOriginCost(originCost);
+        productList.setReleaseDate(releaseDate);
+        productList.setStockQuantity(stockQuantity);
+        productList.setDiscountRate(discountRate);
+        productList.setProductionStatus(productionStatus);
+        productList.setSalesQuantity(salesQuantity);
+
+        if(productService.registNewProduct(productList)){
+            productPrint.printSuccessMessage("registNewProduct");
+        }else{
+            productPrint.printErrorMessage("registNewProduct");
+        }
     }
 
     public void modifyProductInfo(ProductDTO product) {
@@ -51,6 +104,18 @@ public class ProductController {
         //    (조건 3) update가 정상적으로 수행된 경우, Print 객체를 통해 수정 성공했다는 성공 메세지를 출력하세요.
         //    (조건 4) update가 정상적으로 수행되지 않은 경우, Print 객체를 통해 수정 실패했다는 오류 메세지를 출력하세요.
 
+
+
+        productService.modifyProductInfo(product);
+
+        if(productService.modifyProductInfo(product)){
+            productPrint.printSuccessMessage("modifyProductInfo");
+        }else{
+            productPrint.printErrorMessage("modifyProductInfo");
+        }
+
+
+
     }
 
     public void deleteProduct(Map<String, String> parameter) {
@@ -59,6 +124,14 @@ public class ProductController {
         //    (조건 1) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) delete가 정상적으로 수행된 경우, Print 객체를 통해 삭제 성공했다는 성공 메세지를 출력하세요.
         //    (조건 3) delete가 정상적으로 수행되지 않은 경우, Print 객체를 통해 삭제 실패했다는 오류 메세지를 출력하세요.
+
+        productService.deleteProduct(parameter);
+
+        if(productService.deleteProduct(parameter)){
+            productPrint.printSuccessMessage("deleteProduct");
+        }else {
+            productPrint.printErrorMessage("deleteProduct");
+        }
 
     }
 }

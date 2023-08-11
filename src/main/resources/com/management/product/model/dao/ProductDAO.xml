@@ -4,28 +4,195 @@
 <!-- * 주석을 지우고 각각 알맞은 태그를 활용하여 내용을 작성하세요. -->
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
-<mapper namespace="">
+<mapper namespace="com.management.product.model.dao.ProductDAO">
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
+    <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
+        <id property="code" column="PRODUCT_CODE"/>
+        <result property="name" column="PRODUCT_NAME"/>
+        <result property="originCost" column="ORIGIN_COST"/>
+        <result property="releaseDate" column="RELEASE_DATE"/>
+        <result property="discountRate" column="DISCOUNT_RATE"/>
+        <result property="salesQuantity" column="SALES_QUANTITY"/>
+        <result property="stockQuantity" column="STOCK_QUANTITY"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="productionStatus" column="PRODUCTION_STATUS"/>
+    </resultMap>
 
     <!-- 3. 전체 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectAllProductList -->
 
+    <select id="selectAllProductList" resultMap="productResultMap">
+        SELECT PRODUCT_CODE
+                ,PRODUCT_NAME
+                ,ORIGIN_COST
+                ,RELEASE_DATE
+                ,DISCOUNT_RATE
+                ,SALES_QUANTITY
+                ,STOCK_QUANTITY
+                ,CATEGORY_CODE
+                ,PRODUCTION_STATUS
+        FROM PRODUCT_INFO
+    </select>
+
+
     <!-- 4. 조건에 따른 목록을 조회하는 쿼리를 작성하세요.
-            (쿼리id) selectProductByCondition
-            (참고 1) 제품명 조회인 경우, 검색어를 '포함'한 모든 제품을 조회합니다.
-                     (예시) '솔' 검색 -> 솔방울, 칫솔 등 '솔' 포함 제품 모두 조회
-            (참고 2) 판매점 유형별 조회의 경우,
-                     '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
-            (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
+           (쿼리id) selectProductByCondition
+           (참고 1) 제품명 조회인 경우, 검색어를 '포함'한 모든 제품을 조회합니다.
+                    (예시) '솔' 검색 -> 솔방울, 칫솔 등 '솔' 포함 제품 모두 조회
+           (참고 2) 판매점 유형별 조회의 경우,
+                    '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
+           (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
+
+    <select id="selectProductByConditionList" parameterType="SearchCondition" resultMap="productResultMap">
+        SELECT PRODUCT_CODE
+             ,PRODUCT_NAME
+             ,ORIGIN_COST
+             ,RELEASE_DATE
+             ,DISCOUNT_RATE
+             ,SALES_QUANTITY
+             ,STOCK_QUANTITY
+             ,CATEGORY_CODE
+             ,PRODUCTION_STATUS
+        FROM PRODUCT_INFO
+       <!-- <choose>
+            <when test="searchOption == 'productName">
+                WHERE PRODUCT_NAME LIKE CONCAT('%',#{ searchValue },'%')
+            </when>
+            <when test="searchOption == 'salesStore'">
+                <if test="searchValue == '백화점'">
+                    WHERE DISCOUNT_RATE = 0
+                </if>
+                <if test="searchValue == '아울렛'">
+                    WHERE DISCOUNT_RATE >= 1
+                </if>
+            </when>
+            <when test="searchOption == 'newProduct'">
+                WHERE SUBSTRING(RELEASE_DATE,1,6) = '202308'
+            </when>
+            <otherwise><>
+        </choose>-->
+
+
+        <if test="searchOption == 'productName'">
+            WHERE PRODUCT_NAME LIKE CONCAT('%',#{ searchValue },'%')
+        </if>
+        <if test="searchOption == 'salesStore'">
+            <if test="searchValue == '백화점'">
+                WHERE DISCOUNT_RATE = 0
+            </if>
+            <if test="searchValue == '아울렛'">
+                WHERE DISCOUNT_RATE >= 1
+            </if>
+        </if>
+        <if test="searchOption == 'newProduct'">
+            WHERE SUBSTRING(RELEASE_DATE,1,6) = '202308'
+        </if>
+        <if test="searchOption == 'nonProduction'">
+            WHERE PRODUCTION_STATUS = 'N'
+        </if>
+    </select>
+
 
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
 
+    <insert id="registNewProduct" parameterType="com.management.product.model.dto.ProductDTO">
+        INSERT INTO PRODUCT_INFO(
+                                PRODUCT_NAME
+                                ,ORIGIN_COST
+                                ,RELEASE_DATE
+                                ,DISCOUNT_RATE
+                                ,SALES_QUANTITY
+                                ,STOCK_QUANTITY
+                                ,CATEGORY_CODE
+                                ,PRODUCTION_STATUS
+        )
+                        VALUES (
+                                #{ name }
+                                ,#{ originCost }
+                                ,#{ releaseDate }
+                                ,#{ discountRate }
+                                ,#{ salesQuantity }
+                                ,#{ stockQuantity }
+                                ,#{ categoryCode  }
+                                ,#{ productionStatus  }
+                               )
+    </insert>
+
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
 
+
+    <update id="modifyProductInfo" parameterType="com.management.product.model.dto.ProductDTO">
+        UPDATE PRODUCT_INFO
+        <set>
+            <choose>
+                <when test=" name != null and name != 'SKIP'">
+                    ,PRODUCT_NAME = #{ name }
+                </when>
+                <when test=" name == 'skip' or name == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test=" originCost != null and originCost != 'skip'">
+                    ,ORIGIN_COST = #{ originCost }
+                </when>
+                <when test=" originCost == 'skip' or originCost == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  releaseDate  != null and  releaseDate  != 'skip'">
+                    ,RELEASE_DATE = #{ releaseDate  }
+                </when>
+                <when test="  releaseDate  == 'skip' or  releaseDate  == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  discountRate  != null and  discountRate  != 'skip'">
+                    ,DISCOUNT_RATE = #{ discountRate }
+                </when>
+                <when test="  discountRate  == 'skip' or  discountRate  == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  salesQuantity  != null and  salesQuantity  != 'skip'">
+                    ,SALES_QUANTITY = #{ salesQuantity }
+                </when>
+                <when test="  salesQuantity  == 'skip' or  salesQuantity  == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  stockQuantity  != null and  stockQuantity  != 'skip'">
+                    ,STOCK_QUANTITY = #{ stockQuantity }
+                </when>
+                <when test="  stockQuantity  == 'skip' or  stockQuantity  == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  categoryCode   != null and  categoryCode   != 'skip'">
+                    ,CATEGORY_CODE = #{ categoryCode  }
+                </when>
+                <when test="  categoryCode   == 'skip' or  categoryCode   == 'SKIP'">
+                </when>
+            </choose>
+            <choose>
+                <when test="  productionStatus   != null and  productionStatus   != 'skip'">
+                    ,PRODUCTION_STATUS = #{ productionStatus }
+                </when>
+                <when test="  productionStatus   == 'skip' or  productionStatus   == 'SKIP'">
+                </when>
+            </choose>
+        </set>
+        WHERE PRODUCT_CODE = #{ code }
+    </update>
+
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->
+    <delete id="deleteProduct" parameterType="_int">
+        DELETE FROM PRODUCT_INFO
+        WHERE PRODUCT_CODE = #{ code }
+    </delete>
+
 
 </mapper>
