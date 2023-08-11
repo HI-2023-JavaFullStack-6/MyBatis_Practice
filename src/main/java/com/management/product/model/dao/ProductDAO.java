@@ -14,8 +14,8 @@ public interface ProductDAO {
     List<ProductDTO> selectAllProductList();
 
     List<ProductDTO> selectProductByCondition(SearchCondition searchCondition);
-    int registNewProduct(ProductDTO product);
-    int modifyProductInfo(ProductDTO product);
+    int insertProduct(ProductDTO product);
+    int updateProduct(ProductDTO product);
     int deleteProduct(Map<String, String> parameter);
 
 

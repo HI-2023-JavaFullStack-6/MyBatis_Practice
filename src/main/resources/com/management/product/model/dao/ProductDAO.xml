@@ -41,17 +41,17 @@
                CATEGORY_CODE, PRODUCTION_STATUS
 
 
-        <if test="condition == 'productName'">
+        <if test="searchCondition == 'productName'">
             WHERE PRODUCT_NAME LIKE CONCAT('%', #{ value },'%')
         </if>
 
-        <if test="condition == '백화점'">
+        <if test="searchCondition == '백화점'">
             WHERE DISCOUNT_RATE = 0
         </if>
-        <if test="condition == '아울렛'">
+        <if test="searchCondition == '아울렛'">
             WHERE DISCOUNT_RATE >= 1
         </if>
-        <if test="condition == 'releaseData'">
+        <if test="searchCondition == 'releaseData'">
             WHERE(RELEASE_DATE gt LAST_DAY(NOW() - interval 1 month) AND RELEASE_DATE lte LAST_DAY(NOW()))
         </if>
         FROM PRODUCT_INFO
@@ -59,21 +59,24 @@
 
     <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
         INSERT INTO PRODUCT_INFO ( PRODUCT_NAME, CATEGORY_CODE, ORIGIN_COST, RELEASE_DATE,
-                                   STOCK_QUANTITY, DISCOUNT_RATE )
-                    VALUES (#{productName}, #{categoryCode}, #{originCost}, #{releaseDate}, #{stockQuantity}, #{discountRate})
+                                   STOCK_QUANTITY, DISCOUNT_RATE, SALES_QUANTITY, PRODUCTION_STATUS )
+                    VALUES (#{productName}, #{categoryCode}, #{originCost}, #{releaseDate},
+                            #{stockQuantity}, #{discountRate},
+                            '0', 'Y')
     </insert>
 
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        UPDATE PRODUCT_INFO SET /*PRODUCT_CODE = #{productCode}*/
-                                PRODUCT_NAME = #{productName},
+        UPDATE PRODUCT_INFO
+                                SET PRODUCT_NAME = #{productName},
                                 CATEGORY_CODE = #{categoryCode},
                                 ORIGIN_COST = #{originCost},
                                 RELEASE_DATE = #{releaseDate},
                                 STOCK_QUANTITY = #{stockQuantity},
                                 DISCOUNT_RATE = #{discountRate},
                                 SALES_QUANTITY = #{salesQuantity},
-                                PRODUCTION_STATUS = #{[productionStatus}
-                                WHERE PRODUCT_CODE = #{productCode}
+                                PRODUCTION_STATUS = #{productionStatus}
+        WHERE PRODUCT_CODE = #{productCode}
+
     </update>
 
     <delete id="deleteProduct" parameterType="string">

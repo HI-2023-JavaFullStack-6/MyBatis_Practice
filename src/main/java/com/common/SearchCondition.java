@@ -2,38 +2,38 @@ package com.common;
 
 public class SearchCondition {
 
-    private String condition;
-    private String value;
+    private String searchCondition;
+    private String searchValue;
 
     public SearchCondition() {
     }
 
-    public SearchCondition(String condition, String value) {
-        this.condition = condition;
-        this.value = value;
+    public SearchCondition(String searchCondition, String searchValue) {
+        this.searchCondition = searchCondition;
+        this.searchValue = searchValue;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getSearchCondition() {
+        return searchCondition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setSearchCondition(String searchCondition) {
+        this.searchCondition = searchCondition;
     }
 
-    public String getValue() {
-        return value;
+    public String getSearchValue() {
+        return searchValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
     }
 
     @Override
     public String toString() {
         return "SearchCondition{" +
-                "condition='" + condition + '\'' +
-                ", value='" + value + '\'' +
+                "condition='" + searchCondition + '\'' +
+                ", value='" + searchValue + '\'' +
                 '}';
     }
 }

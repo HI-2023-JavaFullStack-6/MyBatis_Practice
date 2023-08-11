@@ -44,7 +44,7 @@ public class ProductService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ProductDAO.class);
 
-        int result = mapper.registNewProduct(product);
+        int result = mapper.insertProduct(product);
         sqlSession.close();
         return result > 0 ? true : false;
 
@@ -54,7 +54,7 @@ public class ProductService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ProductDAO.class);
 
-        int result = mapper.modifyProductInfo(product);
+        int result = mapper.updateProduct(product);
 
         sqlSession.close();
         return result > 0 ? true : false;
