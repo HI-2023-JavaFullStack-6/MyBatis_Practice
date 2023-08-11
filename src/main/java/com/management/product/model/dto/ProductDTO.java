@@ -1,8 +1,6 @@
 package com.management.product.model.dto;
 
-import java.io.Serializable;
-
-public class ProductDTO implements Serializable {
+public class ProductDTO implements java.io.Serializable {
     private String productCode;
     private String productName;
     private String originCost;
@@ -119,8 +117,5 @@ public class ProductDTO implements Serializable {
     public void setProductionStatus(String productionStatus) {
         this.productionStatus = productionStatus;
     }
-// * 주석을 지우고 제품 정보를 담는 객체를 만들 java class를 작성하세요.
-    // * 모든 필드는 String 타입으로 작성하시고, ProductDTO productCompany DB의 'PRODUCT_INFO' 테이블과 매핑 가능해야 합니다.
-    // * DTO 객체에 대하여 기본적으로 작성해야 하는 사항 5가지 항목을 반드시 작성하세요.
 
 }

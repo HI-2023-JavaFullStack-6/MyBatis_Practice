@@ -24,11 +24,11 @@ public class CategoryService {
         categoryDAO = sqlSession.getMapper(CategoryDAO.class);
         List<CategoryDTO> categoryList = categoryDAO.selectCategoryList();
 
-        if(categoryList != null && categoryList.size() > 0) {
+        /*if(categoryList != null && categoryList.size() > 0) {
             for(CategoryDTO cate : categoryList) {
                 System.out.println(cate);
             }
-        }
+        }*/
 
         sqlSession.close();
 

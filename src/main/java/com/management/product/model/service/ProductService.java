@@ -6,6 +6,7 @@ import com.management.product.model.dto.ProductDTO;
 import org.apache.ibatis.session.SqlSession;
 import static com.common.Template.getSqlSession;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,29 +33,21 @@ public class ProductService {
 
         List<ProductDTO> productList = mapper.selectProductByCondition(searchCondition);
 
-
-
+        Map<String, SearchCondition> map = new HashMap<>();
+        map.put("productName", searchCondition);
 
         sqlSession.close();
         return productList;
     }
 
     public boolean registNewProduct(ProductDTO product) {
-        /*SqlSession sqlSession = getSqlSession();
+        SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ProductDAO.class);
 
         int result = mapper.registNewProduct(product);
-
-        if(result > 0) {
-            System.out.println("메뉴 정보 추가 성공");
-            sqlSession.commit();
-        } else {
-            System.out.println("메뉴 정보 추가 실패");
-            sqlSession.rollback();
-        }
         sqlSession.close();
-        return result > 0 ? true : false;*/
-        return false;
+        return result > 0 ? true : false;
+
     }
 
     public boolean modifyProductInfo(ProductDTO product) {
