@@ -6,7 +6,7 @@ import com.management.product.view.ProductMenu;
 import java.util.Scanner;
 
 public class Application {
- 
+  
     public static void main(String[] args) {
 
         do {
