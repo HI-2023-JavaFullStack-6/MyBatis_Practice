@@ -110,8 +110,6 @@ public class ProductMenu {
         System.out.print("수정 대상 제품코드를 입력해 주세요 : ");
         String productCode = sc.nextLine();
 
-        // 수정을 원하지 않는 정보에 "SKIP"을 입력하면 진짜 skip이 되는 기능을 구현해야하는가?
-
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setCode(productCode);
