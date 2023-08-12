@@ -1,7 +1,6 @@
 package com.management.product.view;
 
 import com.common.SearchCondition;
-import com.management.category.model.dto.CategoryDTO;
 import com.management.product.controller.ProductController;
 import com.management.product.model.dto.ProductDTO;
 
@@ -53,7 +52,7 @@ public class ProductMenu {
         System.out.println("===================================");
         System.out.println("1. 제품명으로 조회");
         System.out.println("2. 판매점별 취급 제품 조회");
-        System.out.println("3. 이달의 신재품 조회");
+        System.out.println("3. 이달의 신제품 조회");
         System.out.println("4. 생산 중단 제품 조회");
         System.out.println("===================================");
         System.out.println("원하는 조건의 번호를 입력해 주세요 : ");
@@ -85,12 +84,12 @@ public class ProductMenu {
         SearchCondition searchCondition = new SearchCondition();
         // 주석을 지우고 searchCondition 검색조건과 검색어를 searchCondition 객체에 setting 하세요.
 
-        searchCondition.setSearchCondition("productName");
-        searchCondition.setSearchValue(searchValue);
-        searchCondition.setSearchCondition("salesStore");
-        searchCondition.setSearchValue(searchValue);
-        searchCondition.setSearchCondition("newProduct");
-        searchCondition.setSearchCondition("nonProduction");
+        searchCondition.setOption("productName");
+        searchCondition.setValue(searchValue);
+        searchCondition.setOption("salesStore");
+        searchCondition.setValue(searchValue);
+        searchCondition.setOption("newProduct");
+        searchCondition.setOption("nonProduction");
 
         return searchCondition;
     }

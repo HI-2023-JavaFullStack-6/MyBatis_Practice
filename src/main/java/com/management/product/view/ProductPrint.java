@@ -20,9 +20,17 @@ public class ProductPrint {
 
     public void printProductList(List<ProductDTO> productList, SearchCondition searchCondition) {
 
-        // 2. 조건에 따라 조회한 목록을 출력하는 메소드
-        //    (조건 1) SearchCondition 객체로 검색 조건이 무엇인지 출력하세요.
-        //    (조건 2) List<ProductDTO>로 받아온 데이터 목록을 전체 출력하세요.
+        String searchOption = "";
+        switch (searchCondition.getOption()) {
+            case "productName" : searchOption = "1. 제품명 조회 결과\n";
+            case "salesStore" : searchOption = "2. 제품명 조회 결과\n";
+            case "newProduct" : searchOption = "3. 제품명 조회 결과\n";
+            case "nonProduction" : searchOption = "4. 제품명 조회 결과\n";
+
+        }
+        for(ProductDTO pro : productList) {
+            System.out.println(pro);
+        }
 
     }
 

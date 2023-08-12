@@ -12,6 +12,12 @@ public class CategoryPrint {
 
     public void printTeamList(List<CategoryDTO> categoryList, Map<String, String> parameter) {
 
+        if("orderList".equals(parameter.get("option"))) {
+            System.out.println("순위별 제품 분류는 다음과 같습니다.");
+        } else {
+            System.out.println("전체 제품 분류는 다음과 같습니다.");
+        }
+
         for(CategoryDTO cate : categoryList) {
             System.out.println(cate);
         }

@@ -41,18 +41,18 @@
                CATEGORY_CODE, PRODUCTION_STATUS
 
 
-        <if test="searchCondition == 'productName'">
+        <if test="option == 'productName'">
             WHERE PRODUCT_NAME LIKE CONCAT('%', #{ value },'%')
         </if>
 
-        <if test="searchCondition == '백화점'">
+        <if test="value == '백화점'">
             WHERE DISCOUNT_RATE = 0
         </if>
-        <if test="searchCondition == '아울렛'">
+        <if test="value == '아울렛'">
             WHERE DISCOUNT_RATE >= 1
         </if>
-        <if test="searchCondition == 'releaseData'">
-            WHERE(RELEASE_DATE gt LAST_DAY(NOW() - interval 1 month) AND RELEASE_DATE lte LAST_DAY(NOW()))
+        <if test="option == 'releaseData'">
+            SUBSTR(RELEASE_DATE,1,6) = DATE_FORMAT(CURDATE(),  'YYYYMMDD')
         </if>
         FROM PRODUCT_INFO
     </select>
