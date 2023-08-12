@@ -24,7 +24,7 @@ public class ProductController {
 
         List<ProductDTO> productList = productService.selectAllProductList();
 
-        if(productList != null) {
+        if(productList != null && productList.size() > 0) {
             productPrint.printAllProductList(productList);
         } else {
             productPrint.printErrorMessage("selectList");
@@ -34,9 +34,10 @@ public class ProductController {
 
     public void selectProductByCondition(SearchCondition searchCondition) {
 
-        List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
+        List<ProductDTO> selectedProductList = productService.selectProductByCondition(searchCondition);
 
-        if(productList == null) {productPrint.printProductList(productList, searchCondition);
+        if(selectedProductList == null && selectedProductList.size() > 0) {
+            productPrint.printProductList(selectedProductList, searchCondition);
         } else {
             productPrint.printErrorMessage("selectOne");
         }

@@ -20,8 +20,6 @@
     </resultMap>
 
 
-    <!-- 3. 전체 목록을 조회하는 쿼리를 작성하세요.
-            (쿼리id) selectAllProductList -->
     <select id="selectAllProductList" resultMap="productResultMap">
         SELECT PRODUCT_CODE, PRODUCT_NAME, ORIGIN_COST, RELEASE_DATE,
                DISCOUNT_RATE, SALES_QUANTITY, STOCK_QUANTITY,
@@ -34,26 +32,37 @@
             (참고 2) 판매점 유형별 조회의 경우,
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
-    <select id="selectProductByCondition" resultMap="productResultMap">
+    <select id="selectProductByCondition" parameterType="SearchCondition" resultMap="productResultMap">
         SELECT PRODUCT_CODE, PRODUCT_NAME, ORIGIN_COST, RELEASE_DATE,
                DISCOUNT_RATE, SALES_QUANTITY, STOCK_QUANTITY,
                CATEGORY_CODE, PRODUCTION_STATUS
-
-
-        <if test="option == 'productName'">
-            WHERE PRODUCT_NAME LIKE CONCAT('%', #{ value },'%')
-        </if>
-
-        <if test="value == '백화점'">
-            WHERE DISCOUNT_RATE = 0
-        </if>
-        <if test="value == '아울렛'">
-            WHERE DISCOUNT_RATE >= 1
-        </if>
-        <if test="option == 'releaseData'">
-            SUBSTR(RELEASE_DATE,1,6) = DATE_FORMAT(CURDATE(),  'YYYYMMDD')
-        </if>
         FROM PRODUCT_INFO
+            <where>
+                <choose>
+                    <when test="option != null and option eq 'productName'">
+                        PRODUCT_NAME LIKE CONCAT('%', #{value}, '%')
+                    </when>
+                    <when test="option != null and option eq 'salesStore'">
+                        <if test="value eq '백화점'">
+                            DISCOUNT_RATE >= 0
+                        </if>
+                        <if test="value eq '아울렛'">
+                            DISCOUNT_RATE gte 1
+                        </if>
+                    </when>
+                    <when test="option != null and option eq 'newProduct'">
+                        SUBSTR(RELEASE_DATE, 1, 6) = DATE_FORMAT(CURDATE(),  'YYYYmm')
+                    </when>
+                    <when test="option != null and option eq 'nonCondition'">
+                        production_status = 'N'
+                    </when>
+                </choose>
+            </where>
+
+
+
+
+
     </select>
 
     <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">

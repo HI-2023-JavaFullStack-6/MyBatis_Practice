@@ -31,13 +31,16 @@ public class ProductService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ProductDAO.class);
 
-        List<ProductDTO> productList = mapper.selectProductByCondition(searchCondition);
+        List<ProductDTO> selectedProductList = mapper.selectProductByCondition(searchCondition);
 
         Map<String, SearchCondition> map = new HashMap<>();
         map.put("productName", searchCondition);
+        map.put("salesStore", searchCondition);
+        map.put("nonProduct", searchCondition);
+        map.put("nonProduction", searchCondition);
 
         sqlSession.close();
-        return productList;
+        return selectedProductList;
     }
 
     public boolean registNewProduct(ProductDTO product) {
@@ -45,6 +48,13 @@ public class ProductService {
         mapper = sqlSession.getMapper(ProductDAO.class);
 
         int result = mapper.insertProduct(product);
+
+        if(result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
         sqlSession.close();
         return result > 0 ? true : false;
 
@@ -55,6 +65,12 @@ public class ProductService {
         mapper = sqlSession.getMapper(ProductDAO.class);
 
         int result = mapper.updateProduct(product);
+
+        if(result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
 
         sqlSession.close();
         return result > 0 ? true : false;
@@ -68,6 +84,13 @@ public class ProductService {
         String productCode = parameter.get("productCode");
 
         int result = mapper.deleteProduct(parameter);
+
+        if(result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
 
         sqlSession.close();
         return result > 0 ? true : false;

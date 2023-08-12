@@ -7,6 +7,7 @@
 
     <typeAliases>
         <typeAlias alias="ProductDAO" type="com.management.product.model.dao.ProductDAO" />
+        <typeAlias type="com.common.SearchCondition" alias="SearchCondition"/>
     </typeAliases>
     <environments default="dev">
         <environment id="dev">
@@ -23,6 +24,7 @@
     <mappers>
         <mapper class="com.management.category.model.dao.CategoryDAO"/>
         <mapper class="com.management.product.model.dao.ProductDAO"/>
+        <package name="com.common"></package>
     </mappers>
 
 
