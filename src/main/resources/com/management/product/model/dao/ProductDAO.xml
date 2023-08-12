@@ -60,8 +60,8 @@
     </select>
 
     <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        INSERT INTO PRODUCT_INFO ( PRODUCT_NAME, CATEGORY_CODE, ORIGIN_COST, RELEASE_DATE, STOCK_QUANTITY, DISCOUNT_RATE )
-        VALUES ( #{ productName }, #{ categoryCode }, #{ originCost }, #{ releaseDate }, #{ stockQuantity }, #{ discountRate })
+        INSERT INTO PRODUCT_INFO ( PRODUCT_NAME, CATEGORY_CODE, ORIGIN_COST, RELEASE_DATE, STOCK_QUANTITY, DISCOUNT_RATE, SALES_QUANTITY, PRODUCTION_STATUS)
+        VALUES ( #{ productName }, #{ categoryCode }, #{ originCost }, #{ releaseDate }, #{ stockQuantity }, #{ discountRate }, #{ salesQuantity }, #{ productionStatus })
     </insert>
 
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">

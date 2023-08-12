@@ -9,7 +9,7 @@ public class CategoryPrint {
 
     public void printTeamList(List<CategoryDTO> categoryList, Map<String, String> parameter) {
 
-        if ("allList".equals(parameter.get("option"))) {
+        if (parameter.get("option").equals("allList")) {
             System.out.println("=========== 전체 제품분류 정보 조회 결과 ===========");
         } else {
             System.out.println("=========== 순위별 제품분류 정보 조회 결과 ===========");
