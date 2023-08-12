@@ -67,17 +67,35 @@
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
         UPDATE PRODUCT_INFO
         <set>
-            <if test="salesQuantity ne null and salesQuantity ne 'SKIP' and salesQuantity ne ''">
-                SALES_QUANTITY = #{ salesQuantity },
+            <if test="productName != null and productName neq 'SKIP'">
+                PRODUCT_NAME = #{ productName }
             </if>
-            <if test="productionStatus ne null and productionStatus ne 'SKIP' and productionStatus ne ''">
-                PRODUCTION_STATUS = #{ productionStatus },
+            <if test="categoryCode != null and categoryCode neq 'SKIP'">
+                ,CATEGORY_CODE = #{ categoryCode }
+            </if>
+            <if test="originCost != null and originCost neq 'SKIP'">
+                ,ORIGIN_COST = #{ originCost }
+            </if>
+            <if test="releaseDate != null and releaseDate neq 'SKIP'">
+                ,RELEASE_DATE = #{ releaseDate }
+            </if>
+            <if test="stockQuantity != null and stockQuantity neq 'SKIP'">
+                ,STOCK_QUANTITY = #{ stockQuantity }
+            </if>
+            <if test="discountRate != null and discountRate neq 'SKIP'">
+                ,DISCOUNT_RATE = #{ discountRate }
+            </if>
+            <if test="salesQuantity != null and salesQuantity neq 'SKIP'">
+                ,SALES_QUANTITY = #{ salesQuantity }
+            </if>
+            <if test="productionStatus != null and productionStatus neq 'SKIP'">
+                ,PRODUCTION_STATUS = #{ productionStatus }
             </if>
         </set>
         WHERE PRODUCT_CODE = #{ productCode }
     </update>
 
-    <delete id="deleteProduct" parameterType="_int">
+    <delete id="deleteProduct" parameterType="hashMap">
         DELETE FROM PRODUCT_INFO
         WHERE PRODUCT_CODE = #{ productCode }
     </delete>
