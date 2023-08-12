@@ -14,8 +14,8 @@ public class ProductController {
 
     // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
 
-    private ProductService productService;
-    private ProductPrint productPrint;
+    private final ProductService productService;
+    private final ProductPrint productPrint;
 
     public ProductController(){
         productService = new ProductService();
@@ -72,7 +72,7 @@ public class ProductController {
         String name = product.getName();
         String categoryCode = product.getCategoryCode();
         String originCost = product.getOriginCost();
-        String releaseDate = product.getReleaseDate();
+        String releaseDate = product.getReleaseDate().replace("-","");
         String stockQuantity = product.getStockQuantity();
         String discountRate = product.getDiscountRate();
         String productionStatus = "Y";
@@ -106,9 +106,28 @@ public class ProductController {
 
 
 
-        productService.modifyProductInfo(product);
+        int code = product.getCode();
+        String name = product.getName().toUpperCase();
+        String categoryCode = product.getCategoryCode();
+        String originCost = product.getOriginCost();
+        String releaseDate = product.getReleaseDate().replace("-","");
+        String stockQuantity = product.getStockQuantity();
+        String discountRate = product.getDiscountRate();
+        String productionStatus = product.getProductionStatus();
+        String salesQuantity = product.getSalesQuantity();
 
-        if(productService.modifyProductInfo(product)){
+        ProductDTO productList = new ProductDTO();
+        productList.setCode(code);
+        productList.setName(name);
+        productList.setCategoryCode(categoryCode);
+        productList.setOriginCost(originCost);
+        productList.setReleaseDate(releaseDate);
+        productList.setStockQuantity(stockQuantity);
+        productList.setDiscountRate(discountRate);
+        productList.setProductionStatus(productionStatus);
+        productList.setSalesQuantity(salesQuantity);
+
+        if(productService.modifyProductInfo(productList)){
             productPrint.printSuccessMessage("modifyProductInfo");
         }else{
             productPrint.printErrorMessage("modifyProductInfo");
@@ -124,8 +143,6 @@ public class ProductController {
         //    (조건 1) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) delete가 정상적으로 수행된 경우, Print 객체를 통해 삭제 성공했다는 성공 메세지를 출력하세요.
         //    (조건 3) delete가 정상적으로 수행되지 않은 경우, Print 객체를 통해 삭제 실패했다는 오류 메세지를 출력하세요.
-
-        productService.deleteProduct(parameter);
 
         if(productService.deleteProduct(parameter)){
             productPrint.printSuccessMessage("deleteProduct");

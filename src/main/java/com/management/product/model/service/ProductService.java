@@ -3,6 +3,7 @@ package com.management.product.model.service;
 import com.common.SearchCondition;
 import com.management.product.model.dao.ProductDAO;
 import com.management.product.model.dto.ProductDTO;
+import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -30,14 +31,6 @@ public class ProductService {
 
         List<ProductDTO> productList = productDAO.selectAllProductList();
 
-        if(productList != null & productList.size() >0){
-            for(ProductDTO product : productList){
-                System.out.println(product);
-            }
-        }else {
-            System.out.println("검색 결과가 존재하지 않습니다.");
-        }
-
         sqlSession.close();
 
         return productList;
@@ -54,13 +47,6 @@ public class ProductService {
         productDAO = sqlSession.getMapper(ProductDAO.class);
 
         List<ProductDTO> productList = productDAO.selectProductByConditionList(searchCondition);
-        if(productList != null && productList.size() > 0){
-            for(ProductDTO product : productList){
-                System.out.println(product);
-            }
-        }else {
-            System.out.println("검색 결과가 존재하지 않습니다.");
-        }
 
         sqlSession.close();
 
@@ -108,6 +94,8 @@ public class ProductService {
             sqlSession.rollback();
         }
 
+        sqlSession.close();
+
         return result > 0? true : false;
 
 
@@ -131,6 +119,9 @@ public class ProductService {
         }else {
             sqlSession.rollback();
         }
+
+        sqlSession.close();
+
         return result > 0? true : false;
 
     }

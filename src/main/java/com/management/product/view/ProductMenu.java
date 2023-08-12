@@ -111,6 +111,7 @@ public class ProductMenu {
 
         ProductDTO productDTO = new ProductDTO();
         // 주석을 지우고 받아온 제품 코드를 productDTO 객체에 setting 하세요.
+        productDTO.setCode(Integer.parseInt(productCode));
 
         getProductInfo(productDTO);
 
@@ -121,11 +122,10 @@ public class ProductMenu {
 
         // 주석을 지우고 받아온 활동 상태를 productDTO 객체에 setting 하세요.
 
-        System.out.println("===================================");
-
-        productDTO.setCode(Integer.parseInt(productCode));
         productDTO.setProductionStatus(productionStatus);
         productDTO.setSalesQuantity(salesQuantity);
+
+        System.out.println("===================================");
 
         return productDTO;
     }

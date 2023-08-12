@@ -47,6 +47,7 @@ public class ProductPrint {
             case "modifyProductInfo" : successMessage = "입력하신 메뉴 수정이 성공했습니다."; break;
             case "deleteProduct" : successMessage = "입력하신 메뉴 삭제가 성공했습니다."; break;
         }
+        System.out.println(successMessage);
 
     }
 

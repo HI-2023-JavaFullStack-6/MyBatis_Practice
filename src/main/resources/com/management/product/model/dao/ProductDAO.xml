@@ -68,29 +68,31 @@
                 </if>
             </when>
             <when test="searchOption == 'newProduct'">
-                WHERE SUBSTRING(RELEASE_DATE,1,6) = '202308'
+                WHERE SUBSTRING(RELEASE_DATE,1,6) = DATE_FORMAT(CURDATE(),"%Y%m")
             </when>
             <otherwise><>
         </choose>-->
 
-
-        <if test="searchOption == 'productName'">
-            WHERE PRODUCT_NAME LIKE CONCAT('%',#{ searchValue },'%')
-        </if>
-        <if test="searchOption == 'salesStore'">
-            <if test="searchValue == '백화점'">
-                WHERE DISCOUNT_RATE = 0
+        <where>
+            <if test="searchOption == 'productName'">
+                PRODUCT_NAME LIKE CONCAT('%',#{ searchValue },'%')
             </if>
-            <if test="searchValue == '아울렛'">
-                WHERE DISCOUNT_RATE >= 1
+            <if test="searchOption == 'salesStore'">
+                <if test="searchValue == '백화점'">
+                    DISCOUNT_RATE = 0
+                </if>
+                <if test="searchValue == '아울렛'">
+                    DISCOUNT_RATE >= 1
+                </if>
             </if>
-        </if>
-        <if test="searchOption == 'newProduct'">
-            WHERE SUBSTRING(RELEASE_DATE,1,6) = '202308'
-        </if>
-        <if test="searchOption == 'nonProduction'">
-            WHERE PRODUCTION_STATUS = 'N'
-        </if>
+            <if test="searchOption == 'newProduct'">
+                SUBSTRING(RELEASE_DATE,1,6) = DATE_FORMAT(CURDATE(),"%Y%m")
+                /*RELEASE_DATE BETWEEN DATE_FORMAT(CURDATE(),"%Y%m01") AND DATE_FORMAT(CURDATE(),"%Y%m%d")*/
+            </if>
+            <if test="searchOption == 'nonProduction'">
+                PRODUCTION_STATUS = 'N'
+            </if>
+        </where>
     </select>
 
 
@@ -127,62 +129,37 @@
     <update id="modifyProductInfo" parameterType="com.management.product.model.dto.ProductDTO">
         UPDATE PRODUCT_INFO
         <set>
-            <choose>
-                <when test=" name != null and name != 'SKIP'">
-                    ,PRODUCT_NAME = #{ name }
-                </when>
-                <when test=" name == 'skip' or name == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test=" originCost != null and originCost != 'skip'">
-                    ,ORIGIN_COST = #{ originCost }
-                </when>
-                <when test=" originCost == 'skip' or originCost == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  releaseDate  != null and  releaseDate  != 'skip'">
-                    ,RELEASE_DATE = #{ releaseDate  }
-                </when>
-                <when test="  releaseDate  == 'skip' or  releaseDate  == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  discountRate  != null and  discountRate  != 'skip'">
-                    ,DISCOUNT_RATE = #{ discountRate }
-                </when>
-                <when test="  discountRate  == 'skip' or  discountRate  == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  salesQuantity  != null and  salesQuantity  != 'skip'">
-                    ,SALES_QUANTITY = #{ salesQuantity }
-                </when>
-                <when test="  salesQuantity  == 'skip' or  salesQuantity  == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  stockQuantity  != null and  stockQuantity  != 'skip'">
-                    ,STOCK_QUANTITY = #{ stockQuantity }
-                </when>
-                <when test="  stockQuantity  == 'skip' or  stockQuantity  == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  categoryCode   != null and  categoryCode   != 'skip'">
-                    ,CATEGORY_CODE = #{ categoryCode  }
-                </when>
-                <when test="  categoryCode   == 'skip' or  categoryCode   == 'SKIP'">
-                </when>
-            </choose>
-            <choose>
-                <when test="  productionStatus   != null and  productionStatus   != 'skip'">
-                    ,PRODUCTION_STATUS = #{ productionStatus }
-                </when>
-                <when test="  productionStatus   == 'skip' or  productionStatus   == 'SKIP'">
-                </when>
-            </choose>
+            <if test=" name != null and name != 'SKIP'">
+                ,PRODUCT_NAME = #{ name }
+            </if>
+
+            <if test=" originCost != null and originCost != 'SKIP'">
+                ,ORIGIN_COST = #{ originCost }
+            </if>
+
+            <if test="  releaseDate  != null and  releaseDate  != 'SKIP'">
+                ,RELEASE_DATE = #{ releaseDate  }
+            </if>
+
+            <if test="  discountRate  != null and  discountRate  != 'SKIP'">
+                ,DISCOUNT_RATE = #{ discountRate }
+            </if>
+
+            <if test="  salesQuantity  != null and  salesQuantity  != 'SKIP'">
+                ,SALES_QUANTITY = #{ salesQuantity }
+            </if>
+
+            <if test="  stockQuantity  != null and  stockQuantity  != 'SKIP'">
+                ,STOCK_QUANTITY = #{ stockQuantity }
+            </if>
+
+            <if test="  categoryCode != null and  categoryCode   != 'SKIP'">
+                ,CATEGORY_CODE = #{ categoryCode  }
+            </if>
+
+            <if test="  productionStatus != null and  productionStatus != 'SKIP'">
+                ,PRODUCTION_STATUS = #{ productionStatus }
+            </if>
         </set>
         WHERE PRODUCT_CODE = #{ code }
     </update>
