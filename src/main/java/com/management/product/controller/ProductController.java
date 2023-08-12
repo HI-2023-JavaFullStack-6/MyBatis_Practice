@@ -36,15 +36,11 @@ public class ProductController {
 
         List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
 
-        if(productList == null) {
+        if(productList == null) {productPrint.printProductList(productList, searchCondition);
+        } else {
             productPrint.printErrorMessage("selectOne");
         }
 
-        // 3. 조건에 따른 제품 목록을 조회하는 메소드
-        //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 조건에 따른 제품 목록을 조회하세요.
-        //    (조건 2) 제품 목록이 비어있지 않은 경우, SearchCondition과 List<ProductDTO> 객체를 반환하여
-        //    　　　　　Print 객체를 통해 조회 조건과 제품 목록을 출력하세요.
-        //    (조건 3) 제품 목록이 없는 경우, Print 객체를 통해 조회 결과가 없다는 오류 메세지를 출력하세요.
 
 
     }

@@ -89,7 +89,9 @@ public class ProductMenu {
         searchCondition.setOption("salesStore");
         searchCondition.setValue(searchValue);
         searchCondition.setOption("newProduct");
+        searchCondition.setValue(searchValue);
         searchCondition.setOption("nonProduction");
+        searchCondition.setValue(searchValue);
 
         return searchCondition;
     }

@@ -25,8 +25,7 @@
     <select id="selectAllProductList" resultMap="productResultMap">
         SELECT PRODUCT_CODE, PRODUCT_NAME, ORIGIN_COST, RELEASE_DATE,
                DISCOUNT_RATE, SALES_QUANTITY, STOCK_QUANTITY,
-               CATEGORY_CODE, PRODUCTION_STATUS
-        FROM PRODUCT_INFO
+               CATEGORY_CODE, PRODUCTION_STATUS FROM PRODUCT_INFO
     </select>
     <!-- 4. 조건에 따른 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectProductByCondition
