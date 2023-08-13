@@ -10,18 +10,15 @@ public class CategoryDAOProvider {
     public String selectCategoryList(Map<String, String> parameter) {
         SQL sql = new SQL();
 
-        sql.    SELECT("CATEGORY_CODE").
-                SELECT("CATEGORY_NAME");
-        if (parameter.get("option").equals("orderList")) {
-            sql.    SELECT("COUNT(PRODUCT_CODE)");
-        }
+        sql.SELECT("CATEGORY_CODE")
+                .SELECT("CATEGORY_NAME")
+                .SELECT("COUNT(PRODUCT_CODE)");
 
-        sql.    FROM("PRODUCT_CATEGORY");
-
+        sql.FROM("PRODUCT_CATEGORY");
+        sql.JOIN("PRODUCT_INFO USING (CATEGORY_CODE)");
+        sql.GROUP_BY("CATEGORY_CODE");
         if (parameter.get("option").equals("orderList")) {
-            sql.    JOIN("PRODUCT_INFO USING (CATEGORY_CODE)").
-                    GROUP_BY("CATEGORY_CODE").
-                    ORDER_BY("COUNT(CATEGORY_CODE) DESC");
+            sql.ORDER_BY("COUNT(CATEGORY_CODE) DESC");
         }
 
         return sql.toString();
