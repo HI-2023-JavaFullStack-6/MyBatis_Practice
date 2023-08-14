@@ -75,14 +75,32 @@
 
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
         UPDATE PRODUCT_INFO
-                                SET PRODUCT_NAME = #{productName},
-                                CATEGORY_CODE = #{categoryCode},
-                                ORIGIN_COST = #{originCost},
-                                RELEASE_DATE = #{releaseDate},
-                                STOCK_QUANTITY = #{stockQuantity},
-                                DISCOUNT_RATE = #{discountRate},
-                                SALES_QUANTITY = #{salesQuantity},
-                                PRODUCTION_STATUS = #{productionStatus}
+        <set>
+                <if test="productName != null and productName neq 'SKIP'">
+                    PRODUCT_NAME = #{productName},
+                </if>
+                <if test="originCost != null and originCost neq  'SKIP'">
+                    ORIGIN_COST = #{originCost},
+                </if>
+                <if test="releaseDate != null and releaseDate neq  'SKIP'">
+                    RELEASE_DATE = #{releaseDate},
+                </if>
+                <if test="discountRate != null and discountRate neq   'SKIP'">
+                    DISCOUNT_RATE = #{discountRate},
+                </if>
+                <if test="stockQuantity != null and stockQuantity neq   'SKIP'">
+                    STOCK_QUANTITY = #{stockQuantity},
+                </if>
+                <if test="categoryCode != null and categoryCode neq   'SKIP'">
+                    CATEGORY_CODE = #{categoryCode},
+                </if>
+                <if test="salesQuantity != null and salesQuantity neq  'SKIP'">
+                    SALES_QUANTITY = #{ salesQuantity },
+                </if>
+                <if test="productionStatus != null and productionStatus neq 'SKIP'">
+                    PRODUCTION_STATUS = #{ productionStatus }
+                </if>
+        </set>
         WHERE PRODUCT_CODE = #{productCode}
 
     </update>
