@@ -42,8 +42,6 @@ public class ProductController {
             productPrint.printErrorMessage("selectOne");
         }
 
-
-
     }
 
     public void registNewProduct(ProductDTO product) {

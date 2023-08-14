@@ -33,11 +33,11 @@ public class ProductService {
 
         List<ProductDTO> selectedProductList = mapper.selectProductByCondition(searchCondition);
 
-        Map<String, SearchCondition> map = new HashMap<>();
+        /*Map<String, SearchCondition> map = new HashMap<>();
         map.put("productName", searchCondition);
         map.put("salesStore", searchCondition);
         map.put("nonProduct", searchCondition);
-        map.put("nonProduction", searchCondition);
+        map.put("nonProduction", searchCondition);*/
 
         sqlSession.close();
         return selectedProductList;

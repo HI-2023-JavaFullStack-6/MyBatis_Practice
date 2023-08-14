@@ -44,7 +44,7 @@
                     </when>
                     <when test="option != null and option eq 'salesStore'">
                         <if test="value eq '백화점'">
-                            DISCOUNT_RATE >= 0
+                            DISCOUNT_RATE eq 0
                         </if>
                         <if test="value eq '아울렛'">
                             DISCOUNT_RATE gte 1
