@@ -60,12 +60,13 @@ public class CategoryMenu {
         System.out.println("===================================");
 
         System.out.println("제품분류명을 입력해 주세요 : ");
-        String categoryName = sc.nextLine();
+        String name = sc.nextLine();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
+        CategoryDTO catDTO = new CategoryDTO();
+        catDTO.setName(name);
         // 주석을 지우고 받아온 정보를 categoryDTO 객체에 setting 하세요.
 
-        return categoryDTO;
+        return catDTO;
     }
 
     private static CategoryDTO inputModifyCategoryInfo() {
@@ -73,15 +74,17 @@ public class CategoryMenu {
 
         System.out.println("===================================");
         System.out.println("변경 대상 제품분류 코드를 입력해 주세요 : ");
-        String categoryCode = sc.nextLine();
+        String code = sc.nextLine();
         System.out.println("변경할 제품분류명을 입력해 주세요 : ");
-        String categoryName = sc.nextLine().toUpperCase();
+        String name = sc.nextLine().toUpperCase();
         System.out.println("===================================");
 
-        CategoryDTO categoryDTO = new CategoryDTO();
-        // 주석을 지우고 받아온 정보를 categoryDTO 객체에 setting 하세요.
+        CategoryDTO catDTO = new CategoryDTO();
+        catDTO.setCode(code);
+        catDTO.setName(name);
+            // 주석을 지우고 받아온 정보를 categoryDTO 객체에 setting 하세요.
 
-        return categoryDTO;
+        return catDTO;
     }
 
     private static Map<String, String> inputDeleteCategoryInfo() {
@@ -89,11 +92,11 @@ public class CategoryMenu {
 
         System.out.println("===================================");
         System.out.println("삭제할 제품분류 코드를 입력해 주세요 : ");
-        String categoryCode = sc.nextLine();
+        String code = sc.nextLine();
         System.out.println("===================================");
 
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("categoryCode", categoryCode);
+        parameter.put("catCode", code);
 
         return parameter;
 
