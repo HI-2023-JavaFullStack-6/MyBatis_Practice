@@ -13,7 +13,7 @@ public interface CategoryDAO {
             @Result(property = "categoryName", column = "CATEGORY_NAME"),
     })
     @SelectProvider(type=CategoryDAOProvider.class, method ="selectCategoryList")
-    List<CategoryDTO> selectCategoryList();
+    List<CategoryDTO> selectCategoryList(Map<String, String> parameter);
 
     @InsertProvider(type=CategoryDAOProvider.class, method="insertCategory")
     int insertCategory(CategoryDTO category);

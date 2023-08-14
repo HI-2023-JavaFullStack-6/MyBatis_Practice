@@ -14,15 +14,17 @@ public class CategoryDAOProvider {
     public String selectCategoryList(Map<String, String> parameter) {
 
         SQL sql = new SQL();
-            sql.SELECT("CATEGORY_CODE")
-               .SELECT("CATEGORY_NAME");
-        sql.FROM("PRODUCT_CATEGORY");
-        /*if ("orderList".equals(parameter.get("option"))) {
+            sql.SELECT("A.CATEGORY_CODE")
+               .SELECT("A.CATEGORY_NAME");
+        sql.FROM("PRODUCT_CATEGORY A");
+        if ("orderList".equals(parameter.get("option"))) {
             sql
             .JOIN("PRODUCT_INFO B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)")
                     .GROUP_BY("B.CATEGORY_CODE")
-                    .ORDER_BY("COUNT(A.CATEGORY_CODE) DESC");
-        }*/
+                    .ORDER_BY("COUNT(B.CATEGORY_CODE) DESC");
+        } else {
+            sql.ORDER_BY("A.CATEGORY_CODE");
+        }
 
 
     return sql.toString();

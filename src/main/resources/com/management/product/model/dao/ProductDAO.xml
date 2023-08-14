@@ -44,16 +44,16 @@
                     </when>
                     <when test="option != null and option eq 'salesStore'">
                         <if test="value eq '백화점'">
-                            DISCOUNT_RATE eq 0
+                            DISCOUNT_RATE = 0
                         </if>
                         <if test="value eq '아울렛'">
-                            DISCOUNT_RATE gte 1
+                            DISCOUNT_RATE >= 1
                         </if>
                     </when>
                     <when test="option != null and option eq 'newProduct'">
-                        SUBSTR(RELEASE_DATE, 1, 6) = DATE_FORMAT(CURDATE(),  'YYYYmm')
+                        SUBSTR(RELEASE_DATE, 1, 6) = DATE_FORMAT(CURDATE(), '%Y%m')
                     </when>
-                    <when test="option != null and option eq 'nonCondition'">
+                    <when test="option != null and option eq 'nonProduction'">
                         production_status = 'N'
                     </when>
                 </choose>

@@ -22,10 +22,10 @@ public class ProductPrint {
 
         String searchOption = "";
         switch (searchCondition.getOption()) {
-            case "productName" : searchOption = "1. 제품명 조회 결과\n";
-            case "salesStore" : searchOption = "2. 판매처 조회 결과\n";
-            case "newProduct" : searchOption = "3. 신상품 기준 조회 결과\n";
-            case "nonProduction" : searchOption = "4. 생산 중단 제품 조회 결과\n";
+            case "productName" : searchOption = "1. 제품명 조회 결과\n"; break;
+            case "salesStore" : searchOption = "2. 판매처 조회 결과\n"; break;
+            case "newProduct" : searchOption = "3. 신상품 기준 조회 결과\n"; break;
+            case "nonProduction" : searchOption = "4. 생산 중단 제품 조회 결과\n"; break;
 
         }
         for(ProductDTO pro : productList) {

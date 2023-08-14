@@ -22,7 +22,7 @@ public class CategoryService {
 
         SqlSession sqlSession = getSqlSession();
         categoryDAO = sqlSession.getMapper(CategoryDAO.class);
-        List<CategoryDTO> categoryList = categoryDAO.selectCategoryList();
+        List<CategoryDTO> categoryList = categoryDAO.selectCategoryList(parameter);
 
         sqlSession.close();
 
