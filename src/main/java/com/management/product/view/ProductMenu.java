@@ -5,6 +5,7 @@ import com.management.product.controller.ProductController;
 import com.management.product.model.dto.ProductDTO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,7 +31,7 @@ public class ProductMenu {
 
             switch (selectMenu) {
                 case 1 : productController.selectAllProductList(); break;
-                case 2 : productController.selectProductByCondition(inputSearchCondition()); break;
+                case 2 : productController.selectProductByCondition(condition()); break;
                 case 3 : productController.registNewProduct(inputNewProductInfo()); break;
                 case 4 : productController.modifyProductInfo(inputModifyProductInfo()); break;
                 case 5 : productController.deleteProduct(inputProductCode()); break;
@@ -41,7 +42,7 @@ public class ProductMenu {
         } while(true);
     }
 
-    private static SearchCondition inputSearchCondition() {
+    private static SearchCondition condition() {
 
         Scanner sc = new Scanner(System.in);
         String searchOption = "";
@@ -61,7 +62,7 @@ public class ProductMenu {
         switch (selectMenu) {
             case 1 :
                 sc.nextLine();
-                searchOption = "productName";
+                searchOption = "name";
                 System.out.println("조회할 제품명을 입력해 주세요 : ");
                 searchValue = sc.nextLine();
                 break;
@@ -81,10 +82,9 @@ public class ProductMenu {
             default : System.out.println("잘못된 번호입니다. 확인 후 다시 입력해 주세요."); break;
             }
 
-        SearchCondition searchCondition = new SearchCondition();
-        // 주석을 지우고 searchCondition 검색조건과 검색어를 searchCondition 객체에 setting 하세요.
+        SearchCondition condition = new SearchCondition(searchOption, searchValue);
 
-        return searchCondition;
+        return condition;
     }
 
     private static ProductDTO inputNewProductInfo() {
@@ -93,11 +93,11 @@ public class ProductMenu {
         System.out.println("===================================");
         System.out.println("등록할 새로운 제품 정보를 입력하세요. ");
         System.out.println("===================================");
-        ProductDTO productDTO = new ProductDTO();
-        getProductInfo(productDTO);
+        ProductDTO proDTO = new ProductDTO();
+        getProductInfo(proDTO);
         System.out.println("===================================");
 
-        return productDTO;
+        return proDTO;
     }
 
     private static ProductDTO inputModifyProductInfo() {
@@ -108,44 +108,51 @@ public class ProductMenu {
         System.out.println("수정을 원하지 않는 정보는 SKIP을 입력하세요.");
         System.out.println("===================================");
         System.out.println("수정 대상 제품코드를 입력해 주세요 : ");
-        String productCode = sc.nextLine();
+        String code = sc.nextLine();
 
-        ProductDTO productDTO = new ProductDTO();
-        // 주석을 지우고 받아온 제품 코드를 productDTO 객체에 setting 하세요.
+        ProductDTO proDTO = new ProductDTO();
+        proDTO.setCode(code);
 
-        getProductInfo(productDTO);
+        getProductInfo(proDTO);
 
         System.out.println("제품의 판매량을 입력해 주세요 : ");
-        String salesQuantity  = sc.nextLine();
+        String salesQ  = sc.nextLine();
         System.out.println("제품의 생산여부를 입력해 주세요(Y:생산중 / H:생산보류 / N:생산중단) : ");
-        String productionStatus = sc.nextLine().toUpperCase();
+        String proStat = sc.nextLine().toUpperCase();
 
         // 주석을 지우고 받아온 활동 상태를 productDTO 객체에 setting 하세요.
+        proDTO.setSalesQ(salesQ);
+        proDTO.setProStat(proStat);
 
         System.out.println("===================================");
 
-        return productDTO;
+        return proDTO;
     }
 
-    private static ProductDTO getProductInfo(ProductDTO productDTO) {
+    private static ProductDTO getProductInfo(ProductDTO proDTO) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("제품명을 입력해 주세요 : ");
-        String productName = sc.nextLine();
+        String name = sc.nextLine();
         System.out.println("제품의 분류코드를 입력해 주세요 : ");
-        String categoryCode = sc.nextLine();
+        String catCode = sc.nextLine();
         System.out.println("제품의 원가를 입력해 주세요 : ");
-        String originCost = sc.nextLine();
+        String cost = sc.nextLine();
         System.out.println("제품의 출시일울 입력해 주세요(2000-01-01 형식) : ");
-        String releaseDate = sc.nextLine();
+        String date = sc.nextLine();
         System.out.println("제품의 재고량을 입력해 주세요 : ");
-        String stockQuantity  = sc.nextLine();
+        String stockQ  = sc.nextLine();
         System.out.println("제품의 할인율을 입력해 주세요 : ");
-        String discountRate  = sc.nextLine();
+        String rate  = sc.nextLine();
 
-        // 주석을 지우고 받아온 정보들을 productDTO 객체에 setting 하세요.
+        proDTO.setName(name);
+        proDTO.setCatCode(catCode);
+        proDTO.setCost(cost);
+        proDTO.setDate(date);
+        proDTO.setStockQ(stockQ);
+        proDTO.setRate(rate);
 
-        return productDTO;
+        return proDTO;
     }
 
     private static Map<String, String> inputProductCode() {
@@ -153,11 +160,11 @@ public class ProductMenu {
 
         System.out.println("===================================");
         System.out.println("삭제할 제품의 코드를 입력해 주세요 : ");
-        String productCode = sc.nextLine();
+        String code = sc.nextLine();
         System.out.println("===================================");
 
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("productCode", productCode);
+        parameter.put("code", code);
 
         return parameter;
     }
