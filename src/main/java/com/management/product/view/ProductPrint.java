@@ -12,31 +12,51 @@ public class ProductPrint {
 
     public void printAllProductList(List<ProductDTO> allProductList) {
 
-        // 1. 전체 조회한 목록 출력하는 메소드
-        //    (조건) List<ProductDTO>로 받아온 데이터 목록을 전체 출력하세요.
+        for(ProductDTO pro : allProductList) {
+            System.out.println(pro);
+        }
 
     }
 
     public void printProductList(List<ProductDTO> productList, SearchCondition searchCondition) {
 
-        // 2. 조건에 따라 조회한 목록을 출력하는 메소드
-        //    (조건 1) SearchCondition 객체로 검색 조건이 무엇인지 출력하세요.
-        //    (조건 2) List<ProductDTO>로 받아온 데이터 목록을 전체 출력하세요.
+        String searchOption = "";
+        switch (searchCondition.getOption()) {
+            case "productName" : searchOption = "1. 제품명 조회 결과\n"; break;
+            case "salesStore" : searchOption = "2. 판매처 조회 결과\n"; break;
+            case "newProduct" : searchOption = "3. 신상품 기준 조회 결과\n"; break;
+            case "nonProduction" : searchOption = "4. 생산 중단 제품 조회 결과\n"; break;
+
+        }
+        for(ProductDTO pro : productList) {
+            System.out.println(pro);
+        }
 
     }
 
     public void printSuccessMessage(String successCode) {
+        String successMessage = "";
 
-        // 3. 성공메시지를 출력하는 메소드
-        //    (조건) 성공코드를 전달받아 성공을 알리는 메시지를 출력하세요.
+        switch (successCode) {
+            case "insert" : successMessage = "신규 제품 등록 성공"; break;
+            case "update" : successMessage = "제품 정보 수정 성공"; break;
+            case "delete" : successMessage = "제품 정보 삭제 성공"; break;
+        }
+        System.out.println(successMessage);
 
     }
 
     public void printErrorMessage(String errorCode) {
+        String errorMessage = "";
 
-        // 4. 에러메시지를 출력하는 메소드
-        //    (조건) 에러코드를 전달받아 에러를 알리는 메시지를 출력하세요.
-
+        switch (errorCode) {
+            case "selectList" : errorMessage = "제품 전체 목록 조회 실패"; break;
+            case "selectOne" : errorMessage = "제품 검색 실패"; break;
+            case "insert" : errorMessage = "신규 제품 등록 실패"; break;
+            case "update" : errorMessage = "제품 정보 수정 실패"; break;
+            case "delete" : errorMessage = "제품 정보 삭제 실패"; break;
+        }
+        System.out.println(errorMessage);
     }
 
 }
