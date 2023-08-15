@@ -6,8 +6,8 @@
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
 <mapper namespace="com.management.product.model.dao.ProductDAO">
     <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
-        <id property="code" column="PRODUCT_CODE" />
-        <result property="name" column="PRODUCT_NAME" />
+        <id property="productCode" column="PRODUCT_CODE" />
+        <result property="productName" column="PRODUCT_NAME" />
         <result property="originCost" column="ORIGIN_COST" />
         <result property="releaseDate" column="RELEASE_DATE" />
         <result property="discountRate" column="DISCOUNT_RATE" />
@@ -41,8 +41,37 @@
             (참고 2) 판매점 유형별 조회의 경우,
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
-<select id="selectProductByCondition" resultMap="">
-
+<select id="selectProductByCondition" resultMap="productResultMap" parameterType="SearchCondition">
+    SELECT PRODUCT_CODE
+            ,PRODUCT_NAME
+            ,ORIGIN_COST
+            ,RELEASE_DATE
+            ,DISCOUNT_RATE
+            ,SALES_QUANTITY
+            ,STOCK_QUANTITY
+            ,CATEGORY_CODE
+            ,PRODUCTION_STATUS
+    FROM PRODUCT_INFO
+    WHERE <choose>
+    <when test="searchOption eq 'productName'">
+        PRODUCT_NAME LIKE CONCAT('%',#{searchValue}, '%')
+    </when>
+    <when test="searchOption eq 'salesStore'">
+        <if test="searchValue eq '백화점'">
+            DISCOUNT_RATE=0
+        </if>
+        <if test="searchValue eq '아울렛'">
+            DISCOUNT_RATE>0
+        </if>
+    </when>
+    <when test="searchOption eq 'newProduct'">
+        RELEASE_DATE BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND DATE_FORMAT(NOW(), '%Y-%m-%d');
+    </when>
+    <when test="searchOption eq 'nonProduction'">
+        PRODUCTION_STATUS='N'
+    </when>
+    </choose>
+    ORDER BY PRODUCT_CODE
 </select>
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->

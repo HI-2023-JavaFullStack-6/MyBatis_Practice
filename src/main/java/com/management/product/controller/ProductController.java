@@ -24,7 +24,7 @@ public class ProductController {
     public void selectAllProductList() {
         List<ProductDTO> allProductList = productService.selectAllProductList();
 
-        if(allProductList != null){
+        if(allProductList != null && allProductList.size() > 0){
             productPrint.printAllProductList(allProductList);
         } else {
             productPrint.printErrorMessage("selectList");
@@ -39,8 +39,8 @@ public class ProductController {
     public void selectProductByCondition(SearchCondition searchCondition) {
         List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
 
-        if(productList != null){
-
+        if(productList != null && productList.size()>0){
+            productPrint.printAllProductList(productList);
         } else {
             productPrint.printErrorMessage("selectList");
         }
@@ -54,6 +54,13 @@ public class ProductController {
 
     public void registNewProduct(ProductDTO product) {
 
+        product.
+
+        if(productList != null && productList.size()>0){
+            productPrint.printAllProductList(productList);
+        } else {
+            productPrint.printErrorMessage("selectList");
+        }
         // 4. 제품 정보를 등록하는 메소드
         //    (조건 1) 화면에서 releaseDate를 0000-00-00 형태로 받아옵니다.
         //            해당 필드에 매핑되는 DB 컬럼 releaseDate가 8byte이므로 '-' 문자를 제거하여 product객체에 setting 하세요.

@@ -1,16 +1,15 @@
 package com.management.product.model.dao;
 
+import com.common.SearchCondition;
 import com.management.product.model.dto.ProductDTO;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public interface ProductDAO {
-    public List<ProductDTO> selectAllProductList(SqlSession sqlSession){
-        return sqlSession.selectList("");
-    }
+    List<ProductDTO> selectAllProductList();
 
-    List<ProductDTO> selectProductByCondition();
+    List<ProductDTO> selectProductByCondition(SearchCondition searchCondition);
 
 
 

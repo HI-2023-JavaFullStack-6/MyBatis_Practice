@@ -82,6 +82,8 @@ public class ProductMenu {
             }
 
         SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setOption(searchOption);
+        searchCondition.setValue(searchValue);
         // 주석을 지우고 searchCondition 검색조건과 검색어를 searchCondition 객체에 setting 하세요.
 
         return searchCondition;

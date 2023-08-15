@@ -38,7 +38,7 @@ public class ProductPrint {
     public void printErrorMessage(String errorCode) {
         String errorMessage = "";
         switch (errorCode){
-            case "selectList" : errorMessage = "전체 제품 정보 조회에 실패했습니다:("; break;
+            case "selectList" : errorMessage = "제품 정보 조회에 실패했습니다:("; break;
         }
         System.out.println(errorMessage);
         // 4. 에러메시지를 출력하는 메소드

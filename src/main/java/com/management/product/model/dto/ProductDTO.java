@@ -2,8 +2,8 @@ package com.management.product.model.dto;
 
 public class ProductDTO implements java.io.Serializable{
 
-    private int code;
-    private String name;
+    private String productCode;
+    private String productName;
     private String originCost;
     private String releaseDate;
     private String discountRate;
@@ -15,9 +15,9 @@ public class ProductDTO implements java.io.Serializable{
     public ProductDTO() {
     }
 
-    public ProductDTO(int code, String name, String originCost, String releaseDate, String discountRate, String salesQuantity, String stockQuantity, String categoryCode, String productionStatus) {
-        this.code = code;
-        this.name = name;
+    public ProductDTO(String productCode, String productName, String originCost, String releaseDate, String discountRate, String salesQuantity, String stockQuantity, String categoryCode, String productionStatus) {
+        this.productCode = productCode;
+        this.productName = productName;
         this.originCost = originCost;
         this.releaseDate = releaseDate;
         this.discountRate = discountRate;
@@ -27,20 +27,20 @@ public class ProductDTO implements java.io.Serializable{
         this.productionStatus = productionStatus;
     }
 
-    public int getCode() {
-        return code;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getOriginCost() {
@@ -102,8 +102,8 @@ public class ProductDTO implements java.io.Serializable{
     @Override
     public String toString() {
         return "ProductDTO{" +
-                "code=" + code +
-                ", name='" + name + '\'' +
+                "productCode=" + productCode +
+                ", productName='" + productName + '\'' +
                 ", originCost='" + originCost + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", discountRate='" + discountRate + '\'' +
