@@ -19,8 +19,8 @@ public class ProductMenu {
             System.out.println("생산 및 판매 제품 정보 관리 화면입니다.");
             System.out.println("===================================");
             System.out.println("1. 전체 제품 정보 조회");
-            System.out.println("2. 조건부 제품 정보 조회");
-            System.out.println("3. 신규 제품 정보 등록");
+            System.out.println("2. 조건부 제품 정보 조회");  /*조회할거면 디비에 들고갈게 없ㅇ고*/
+            System.out.println("3. 신규 제품 정보 등록");  /*조회 이외의 것들 할거면 디비에 들고갈게 있다*/
             System.out.println("4. 기존 제품 정보 수정");
             System.out.println("5. 판매부진 단종 제품 삭제");
             System.out.println("9. 이전 메뉴로 이동");
@@ -34,7 +34,7 @@ public class ProductMenu {
                 case 3 : productController.registNewProduct(inputNewProductInfo()); break;
                 case 4 : productController.modifyProductInfo(inputModifyProductInfo()); break;
                 case 5 : productController.deleteProduct(inputProductCode()); break;
-                case 9 : System.out.println("========상위 메뉴로 이동합니다.========"); return;
+                case 9 : System.out.println("========상위 메뉴로 이동합니다.========"); return; //클래스에서 리턴은 이 클래스 끝내라
                 default : System.out.println("잘못된 번호입니다. 확인 후 다시 입력해 주세요."); break;
             }
 
