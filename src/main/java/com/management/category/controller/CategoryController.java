@@ -1,17 +1,32 @@
 package com.management.category.controller;
 
 import com.management.category.model.dto.CategoryDTO;
+import com.management.category.model.service.CategoryService;
+import com.management.category.view.CategoryPrint;
 
+import java.util.List;
 import java.util.Map;
 
 public class CategoryController {
 
-    // * 주석을 지우고 Controller 역할에 해당하는 내용을 작성하세요.
+   private final CategoryPrint categoryPrint;
+   private CategoryService categoryService;
 
-    // 1. 자주 사용할 Service와 Print 객체를 선언하고, Controller 객체 생성 시 생성되도록 작성하세요.
+   public CategoryController() {  /*컨트롤러생성*/
+       categoryPrint = new CategoryPrint();
+       categoryService = new CategoryService();
+   }
 
     public void selectCategoryList(Map<String, String> parameter) {
 
+
+       List<CategoryDTO> teamList = categoryService.selectCategoryList(parameter);
+
+       if(teamList != null && teamList.size() >0) {
+           categoryPrint.printTeamList(teamList, parameter);
+       } else {
+           categoryPrint.printErrorMessage("selectCategoryList");
+       }
         // 2. 제품분류 목록을 조회하는 메소드
         //    (조건 1) Service 객체를 호출하여 조건에 따라 List<CategoryDTO> 타입으로 제품분류 목록을 조회하세요.
         //    (조건 2) 목록이 비어있지 않은 경우, Print 객체를 통해 제품분류 목록을 출력하세요.
@@ -21,6 +36,13 @@ public class CategoryController {
 
     public void registNewCategory(CategoryDTO category) {
 
+
+       if(categoryService.registNewCategory(category)) {
+           categoryPrint.printSuccessMessage("modifyCategory");
+
+       } else {
+           categoryPrint.printErrorMessage("modifyCategory");
+       }
         // 3. 제품분류 정보를 등록하는 메소드
         //    (조건 1) Service 객체를 호출하여 등록을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) insert가 정상적으로 수행된 경우, Print 객체를 통해 등록 성공했다는 성공 메세지를 출력하세요.
@@ -30,6 +52,12 @@ public class CategoryController {
 
     public void modifyCategoryName(CategoryDTO category) {
 
+       if(categoryService.modifyCategoryName(category)) {
+           categoryPrint.printSuccessMessage("modigyCategory");
+
+       } else {
+           categoryPrint.printErrorMessage("modifyCategory");
+       }
         // 4. 제품분류 정보를 수정하는 메소드
         //    (조건 1) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) update가 정상적으로 수행된 경우, Print 객체를 통해 수정 성공했다는 성공 메세지를 출력하세요.
@@ -38,6 +66,12 @@ public class CategoryController {
     }
 
     public void deleteCategory(Map<String, String> parameter) {
+
+       if(categoryService.deleteCategory(parameter)) {
+           categoryPrint.printSuccessMessage("deleteCategory");
+       } else {
+           categoryPrint.printErrorMessage("deleteCategory");
+       }
 
         // 5. 제품분류 정보를 삭제하는 메소드
         //    (조건 1) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
