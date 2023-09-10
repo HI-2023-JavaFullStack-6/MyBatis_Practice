@@ -27,7 +27,7 @@ public class ProductController {
         if(allProductList != null && allProductList.size() > 0){
             productPrint.printAllProductList(allProductList);
         } else {
-            productPrint.printErrorMessage("selectList");
+            productPrint.printErrorMessage("selectAllList");
         }
         // 2. 전체 제품 목록을 조회하는 메소드
         //    (조건 1) Service 객체를 호출하여 List<ProductDTO> 타입으로 전체 제품 목록을 조회하세요.
@@ -40,7 +40,7 @@ public class ProductController {
         List<ProductDTO> productList = productService.selectProductByCondition(searchCondition);
 
         if(productList != null && productList.size()>0){
-            productPrint.printAllProductList(productList);
+            productPrint.printProductList(productList, searchCondition);
         } else {
             productPrint.printErrorMessage("selectList");
         }
@@ -54,12 +54,14 @@ public class ProductController {
 
     public void registNewProduct(ProductDTO product) {
 
-        product.
+        product.setReleaseDate(product.getReleaseDate().replaceAll("-",""));
+        product.setProductionStatus("Y");
+        product.setSalesQuantity("0");
 
-        if(productList != null && productList.size()>0){
-            productPrint.printAllProductList(productList);
+        if(productService.registNewProduct(product)){
+            productPrint.printSuccessMessage("registProduct");
         } else {
-            productPrint.printErrorMessage("selectList");
+            productPrint.printErrorMessage("registProduct");
         }
         // 4. 제품 정보를 등록하는 메소드
         //    (조건 1) 화면에서 releaseDate를 0000-00-00 형태로 받아옵니다.
@@ -79,6 +81,12 @@ public class ProductController {
         //　  (조건 2) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 3) update가 정상적으로 수행된 경우, Print 객체를 통해 수정 성공했다는 성공 메세지를 출력하세요.
         //    (조건 4) update가 정상적으로 수행되지 않은 경우, Print 객체를 통해 수정 실패했다는 오류 메세지를 출력하세요.
+        product.setReleaseDate(product.getReleaseDate().replaceAll("-",""));
+        if(productService.modifyProductInfo(product)){
+            productPrint.printSuccessMessage("modifyProduct");
+        }else {
+            productPrint.printErrorMessage("modifyProduct");
+        }
 
     }
 
@@ -88,6 +96,11 @@ public class ProductController {
         //    (조건 1) Service 객체를 호출하여 수정을 수행하고, 결과를 boolean 값으로 return 받으세요.
         //    (조건 2) delete가 정상적으로 수행된 경우, Print 객체를 통해 삭제 성공했다는 성공 메세지를 출력하세요.
         //    (조건 3) delete가 정상적으로 수행되지 않은 경우, Print 객체를 통해 삭제 실패했다는 오류 메세지를 출력하세요.
+        if(productService.deleteProduct(parameter)){
+            productPrint.printSuccessMessage("deleteProduct");
+        }else {
+            productPrint.printErrorMessage("deleteProduct");
+        }
 
     }
 }

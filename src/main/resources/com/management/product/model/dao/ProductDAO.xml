@@ -5,7 +5,7 @@
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
 <mapper namespace="com.management.product.model.dao.ProductDAO">
-    <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
+    <resultMap id="productResultMap" type="ProductDTO">
         <id property="productCode" column="PRODUCT_CODE" />
         <result property="productName" column="PRODUCT_NAME" />
         <result property="originCost" column="ORIGIN_COST" />
@@ -52,34 +52,75 @@
             ,CATEGORY_CODE
             ,PRODUCTION_STATUS
     FROM PRODUCT_INFO
-    WHERE <choose>
-    <when test="searchOption eq 'productName'">
-        PRODUCT_NAME LIKE CONCAT('%',#{searchValue}, '%')
+    <where>
+    <choose>
+    <when test="option eq 'productName' and option != null">
+        PRODUCT_NAME LIKE CONCAT('%',#{value}, '%')
     </when>
-    <when test="searchOption eq 'salesStore'">
-        <if test="searchValue eq '백화점'">
+    <when test="option eq 'salesStore' and option != null">
+        <if test="value eq '백화점'">
             DISCOUNT_RATE=0
         </if>
-        <if test="searchValue eq '아울렛'">
-            DISCOUNT_RATE>0
+        <if test="value eq '아울렛'">
+            <![CDATA[DISCOUNT_RATE>0]]>
         </if>
     </when>
-    <when test="searchOption eq 'newProduct'">
-        RELEASE_DATE BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND DATE_FORMAT(NOW(), '%Y-%m-%d');
+    <when test="option eq 'newProduct' and option != null">
+        SUBSTR(RELEASE_DATE,1,6) = DATE_FORMAT(CURDATE(), '%Y%m')
     </when>
-    <when test="searchOption eq 'nonProduction'">
-        PRODUCTION_STATUS='N'
-    </when>
+    <otherwise>
+        PRODUCTION_STATUS = 'N'
+    </otherwise>
     </choose>
+    </where>
     ORDER BY PRODUCT_CODE
 </select>
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
+    <insert id="insertProduct" parameterType="ProductDTO">
+        INSERT INTO PRODUCT_INFO (PRODUCT_NAME, ORIGIN_COST, RELEASE_DATE, DISCOUNT_RATE, SALES_QUANTITY, STOCK_QUANTITY, CATEGORY_CODE, PRODUCTION_STATUS)
+        VALUES(#{productName}, #{originCost}, #{releaseDate}, #{discountRate}, #{salesQuantity}, #{stockQuantity}, #{categoryCode}, #{productionStatus})
+    </insert>
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
+    <update id="updateProduct" parameterType="ProductDTO">
+        UPDATE PRODUCT_INFO
+        <set>
+            <if test="productName != null and productName neq 'SKIP'">
+                PRODUCT_NAME=#{productName}
+            </if>
+            <if test="originCost != null and originCost neq 'SKIP'">
+                ,ORIGIN_COST=#{originCost}
+            </if>
+            <if test="releaseDate != null and releaseDate neq 'SKIP'">
+                ,RELEASE_DATE=#{releaseDate}
+            </if>
+            <if test="discountRate != null and discountRate neq 'SKIP'">
+                DISCOUNT_RATE=#{discountRate}
+            </if>
+            <if test="salesQuantity != null and salesQuantity neq 'SKIP'">
+                SALES_QUANTITY=#{salesQuantity}
+            </if>
+            <if test="stockQuantity != null and stockQuantity neq 'SKIP'">
+                STOCK_QUANTITY=#{stockQuantity}
+            </if>
+            <if test="categoryCode != null and categoryCode neq 'SKIP'">
+                CATEGORY_CODE=#{categoryCode}
+            </if>
+            <if test="productionStatus != null and productionStatus neq 'SKIP'">
+                PRODUCTION_STATUS=#{productionStatus}
+            </if>
+        </set>
+        WHERE PRODUCT_CODE=#{productCode}
+    </update>
 
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->
+    <delete id="deleteProduct" parameterType="hashMap">
+        DELETE
+        FROM PRODUCT_INFO
+        WHERE PRODUCT_CODE=#{productCode}
+    </delete>
 
 </mapper>
