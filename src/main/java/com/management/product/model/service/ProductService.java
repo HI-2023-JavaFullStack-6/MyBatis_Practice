@@ -20,7 +20,7 @@ public class ProductService {
         productDAO = sqlSession.getMapper(ProductDAO.class);
 
         List<ProductDTO> allProductList = productDAO.selectAllProductList();
-
+        System.out.println(allProductList);
 
         sqlSession.close();
         return allProductList;
